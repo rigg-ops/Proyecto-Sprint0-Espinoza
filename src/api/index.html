@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mediciones</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- CABECERA -->
+  <header>
+    <h1>📡 Proyecto Biometría – GTI 3A</h1>
+  </header>
+
+  <!-- ESTADO DE CARGA -->
+  <div id="loading">Cargando datos desde la base de datos...</div>
+
+  <!-- TABLA DE DATOS -->
+  <section id="tabla-contenedor">
+    <table id="tabla" style="display:none;">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tipo</th>
+          <th>Valor</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="contenido-tabla"></tbody>
+    </table>
+  </section>
+
+  <!-- SCRIPT DE LÓGICA -->
+  <script src="logica.js"></script>
+</body>
+</html>
