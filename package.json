@@ -1,0 +1,28 @@
+{
+  "name": "proyecto-sprint0-espinoza",
+  "version": "1.0.0",
+  "description": "Proyecto Biometría:\r Sistema IoT que mide variables ambientales (CO₂ y Temperatura) mediante un sensor conectado a un Arduino BLE (Emisora iBeacon).  \r Los datos se envían a una API REST en PHP desplegada en Plesk, donde se almacenan automáticamente en una base de datos MySQL y se visualizan desde una interfaz web.  \r También se dispone de una aplicación Android capaz de detectar los Beacons y mostrar los valores recibidos.",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rigg-ops/Proyecto-Sprint0-Espinoza.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rigg-ops/Proyecto-Sprint0-Espinoza/issues"
+  },
+  "homepage": "https://github.com/rigg-ops/Proyecto-Sprint0-Espinoza#readme",
+  "dependencies": {
+    "mocha": "^11.7.4",
+    "request": "^2.88.2"
+  }
+}
