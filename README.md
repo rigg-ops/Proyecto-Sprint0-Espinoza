@@ -1,85 +1,89 @@
- **Proyecto Biometría Sprint 0 – 2025**  
- *Universitat Politècnica de València – Grado en Tecnologías Interactivas (GTI 3A)*  
- *Autora:* **Judit Espinoza Cervera**
+ **Sistema de Monitorización Ambiental – Sprint 0 (2025)**  
+ *Universitat Politècnica de València – GTI 3A*  
+ *Desarrollado por:* **Judit Espinoza Cervera**
 
 ---
 
-**Web del proyecto (Plesk):**  
+###  Enlace del Proyecto (Plesk)
 [https://jespcer.upv.edu.es](https://jespcer.upv.edu.es)
 
-Sistema completo de monitorización de datos ambientales (**CO₂** y **temperatura**) desarrollado para la asignatura  
-**Proyecto Aplicaciones de Biometría y Medio Ambiente**.  
-El sistema integra hardware, aplicación Android, servidor web y pruebas automáticas.
+Este proyecto integra diferentes tecnologías para crear un sistema de medición ambiental inteligente.  
+Permite capturar, enviar y visualizar datos de **CO₂** y **temperatura** usando sensores, Bluetooth Low Energy (BLE) y una API web.  
+
+Desarrollado dentro de la asignatura **Proyecto de Aplicaciones de Biometría y Medio Ambiente** del Grado en Tecnologías Interactivas.
 
 ---
 
-##  Contenido del Proyecto
+##  Estructura General del Sistema
 
--  **Arduino (C++)** → Emite tramas **BLE iBeacon** con el identificador `EPSG-GTI-PROY-3A`.  
-  Envía valores simulados de CO₂ y temperatura mediante anuncios periódicos.  
+- ** Módulo Arduino (C++)** → Emite datos simulados mediante anuncios **iBeacon BLE**, con un UUID único (`EPSG-GTI-PROY-3A`).  
+  Envía periódicamente las medidas de temperatura y CO₂.
 
--  **Android (Java)** → Escanea dispositivos BLE, filtra por nombre **"BioBeacon"**,  
-  interpreta las tramas iBeacon y envía las mediciones al servidor mediante **HTTP POST (JSON)**.
+- ** Aplicación Android (Java)** → Escanea dispositivos BLE cercanos, filtra por nombre **“BioBeacon”**,  
+  interpreta las tramas recibidas e informa al servidor mediante peticiones **HTTP POST** en formato JSON.
 
--  **Servidor (PHP + MySQL)** → Implementa una **API REST** con los endpoints:
-  - `GET  api.php?endpoint=mediciones` → Devuelve las últimas mediciones.  
-  - `POST api.php` → Inserta una nueva medición (`{ tipo, valor }`).  
-  - `GET  api.php?endpoint=health` → Estado del servicio.
+- ** Servidor Web (PHP + MySQL)** → Recibe y almacena las mediciones a través de una **API RESTful**.  
+  Ofrece endpoints como:
+  - `GET  api.php?endpoint=mediciones` → Devuelve las mediciones más recientes.  
+  - `POST api.php` → Inserta una nueva medida (`{ tipo, valor }`).  
+  - `GET  api.php?endpoint=health` → Indica el estado del servicio.
 
--  **Web (HTML + JS)** → Muestra las mediciones almacenadas en una tabla dinámica  
-  obtenida de la API REST usando **Fetch API**.  
+- ** Interfaz Web (HTML + JS)** → Muestra los datos guardados en una tabla dinámica actualizada en tiempo real  
+  gracias al uso de la **Fetch API**.
 
--  **Tests automáticos (Node.js + Mocha + Request)** →  
-  Validan la conexión con la API (inserción, consulta y estado del servidor).
-
----
-
-##  Tecnologías y Herramientas
-
-| Componente | Tecnología |
-|-------------|-------------|
-| Emisora BLE | Arduino IDE – C++ |
-| Receptor BLE | Android Studio – Java |
-| Servidor REST | PHP + MySQL (Plesk UPV) |
-| Frontend | HTML5 + CSS + JavaScript |
-| Tests | Node.js, Mocha, Request |
-| Control de versiones | Git + GitHub |
+- ** Validación (Node.js + Mocha + Request)** →  
+  Ejecuta pruebas automáticas que comprueban la conexión, la inserción de datos y la respuesta de la API REST.
 
 ---
 
-##  Despliegue
+##  Herramientas y Tecnologías
 
-El sistema está desplegado en el servidor Plesk de la UPV:
-
-- **API REST:** `https://jespcer.upv.edu.es/biometria/api.php`  
-- **Web:** `https://jespcer.upv.edu.es/biometria/index.html`  
-- **Base de datos:** MySQL (creada y gestionada automáticamente por PHP)
-
----
-
-##  Uso de la Aplicación Android
-
-1. Abre el proyecto en **Android Studio**.  
-2. Permite el uso de **Bluetooth** y **ubicación**.  
-3. Pulsa el botón **“Buscar nuestro dispositivo”**.  
-4. El sistema detectará el beacon **"BioBeacon"** con UUID `EPSG-GTI-PROY-3A`.  
-5. Los datos capturados se enviarán automáticamente a la API REST.  
+| Componente | Tecnología empleada |
+|-------------|--------------------|
+| Emisión BLE | Arduino IDE – C++ |
+| Recepción BLE | Android Studio – Java |
+| Backend REST | PHP + MySQL (Plesk UPV) |
+| Interfaz Web | HTML5 + CSS + JavaScript |
+| Testing | Node.js con Mocha y Request |
+| Control de versiones | Git y GitHub |
 
 ---
 
-##  Ejecución de Tests
+##  Despliegue del Sistema
 
-Los tests automáticos se encuentran en la carpeta `/test/` y comprueban el correcto funcionamiento de la API REST.
+El proyecto está alojado y funcionando en el entorno **Plesk (UPV)**:
 
-### 📍 Pasos:
+-  **API REST:** `https://jespcer.upv.edu.es/biometria/api.php`  
+-  **Interfaz Web:** `https://jespcer.upv.edu.es/biometria/index.html`  
+-  **Base de datos:** MySQL (creada automáticamente por PHP)
+
+---
+
+##  Instrucciones de Uso – Aplicación Android
+
+1. Abrir el proyecto en **Android Studio**.  
+2. Activar **Bluetooth** y conceder permisos de **ubicación**.  
+3. Pulsar **“Buscar dispositivo”** en la interfaz.  
+4. La aplicación localizará el beacon **“BioBeacon”** (UUID `EPSG-GTI-PROY-3A`).  
+5. Los datos detectados se enviarán automáticamente al servidor remoto.  
+
+---
+
+##  Ejecución de Pruebas Automáticas
+
+El sistema incluye una carpeta `/test/` con las pruebas unitarias de la API REST.  
+Estas verifican que el servidor responde correctamente al registrar y consultar mediciones.
+
+###  Pasos para ejecutarlas:
 ```bash
-npm install        # Instalar dependencias
-npm test           # Ejecutar la suite de pruebas
+npm install        # Instala dependencias necesarias
+npm test           # Ejecuta la suite de pruebas
 ```
- Resultado esperado:
- Pruebas API Proyecto Biometría
-  ✓ POST /api.php inserta una medida válida
-  ✓ GET /api.php?endpoint=mediciones devuelve lista de mediciones
-  ✓ GET /api.php?endpoint=health responde correctamente
+### Ejemplo de resultado:
+```bash
+ Pruebas API - Sistema de Monitorización Ambiental
+  ✓ Inserta una nueva medida correctamente (POST)
+  ✓ Devuelve la lista de mediciones (GET)
+  ✓ Confirma estado del servidor (health)
 
 3 passing (1s)
